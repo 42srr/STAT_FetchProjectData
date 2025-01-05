@@ -2,9 +2,8 @@ package com.example.STAT_FetchProjectData.client;
 
 import com.example.STAT_FetchProjectData.client.dto.Oauth2TokenRequestDto;
 import com.example.STAT_FetchProjectData.client.dto.Oauth2TokenResponseDto;
-import com.example.STAT_FetchProjectData.config.TokenConfig;
-import com.example.STAT_FetchProjectData.client.exception.TokenNotFoundException;
 import com.example.STAT_FetchProjectData.client.exception.TokenRequestFailedException;
+import com.example.STAT_FetchProjectData.config.TokenConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,19 +13,11 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class FtClientTokenImpl implements FtClientToken {
-
+public class FtTokenClientImpl implements FtTokenClient {
     private final TokenConfig tokenConfig;
 
     @Override
-    public String getAccessToken() {
-        if(dataBase.peek() == null)
-            throw new TokenNotFoundException("Fail to load Access Token");
-        return dataBase.peek().getAccess_token();
-    }
-
-    @Override
-    public void saveAccessToken(String code) {
+    public Oauth2TokenResponseDto getFtToken(String code) {
         Oauth2TokenRequestDto requestDto = new Oauth2TokenRequestDto();
         requestDto.setCode(code);
         requestDto.setGrant_type(tokenConfig.getGrantType());
@@ -48,14 +39,7 @@ public class FtClientTokenImpl implements FtClientToken {
         } catch (HttpClientErrorException e) {
             throw new TokenRequestFailedException("Fail to get Access Token");
         }
-
         log.info("=== token ==={}\n", responseDto.toString());
-        dataBase.clear();
-        dataBase.add(responseDto);
-    }
-
-    @Override
-    public void refreshAccessToken() {
-
+        return responseDto;
     }
 }

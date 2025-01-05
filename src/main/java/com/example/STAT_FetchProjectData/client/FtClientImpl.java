@@ -1,16 +1,13 @@
 package com.example.STAT_FetchProjectData.client;
 
-import com.example.STAT_FetchProjectData.client.dto.Oauth2TokenRequestDto;
 import com.example.STAT_FetchProjectData.config.TokenConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.el.parser.Token;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;

@@ -1,11 +1,8 @@
 package com.example.STAT_FetchProjectData.api.controller;
 
 import com.example.STAT_FetchProjectData.api.ApiResponse;
-import com.example.STAT_FetchProjectData.api.controller.dto.User;
 import com.example.STAT_FetchProjectData.api.controller.exception.ReceiveUserException;
-import com.example.STAT_FetchProjectData.client.FtClientImpl;
-import com.example.STAT_FetchProjectData.client.FtClientToken;
-import com.example.STAT_FetchProjectData.client.FtClientTokenImpl;
+import com.example.STAT_FetchProjectData.repository.FtMemoryTokenRepository;
 import com.example.STAT_FetchProjectData.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProjectController {
     private final ProjectService projectService;
-    private final FtClientTokenImpl ftClientToken;
+    private final FtMemoryTokenRepository ftClientToken;
 
     @GetMapping("/project")
     public ApiResponse<List<String>> getAllProjects(@RequestParam String serverId) {
