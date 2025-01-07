@@ -1,7 +1,10 @@
 package com.example.STAT_FetchProjectData.api;
 
+import com.example.STAT_FetchProjectData.api.controller.dto.UsersProjectsResponse;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
+
+import java.util.List;
 
 @Getter
 public class ApiResponse<T> {
@@ -17,11 +20,28 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-    public static <T> ApiResponse<T> ok (T data) {
-        return new ApiResponse<>(HttpStatus.OK, HttpStatus.OK.value(), "Success", data);
+    public static <T> ApiResponse<T> ok(T data) {
+        return new ApiResponse<>(
+                HttpStatus.OK,            // 상태 코드
+                HttpStatus.OK.value(),    // 숫자 상태 코드 (200)
+                "Success",                // 메시지
+                data                      // 전달할 데이터
+        );
     }
 
-    public static <T> ApiResponse<T> badRequest (Exception e, String msg) {
-        return new ApiResponse<>(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), msg, null);
+//    public static <T> ApiResponse<T> ok(T data) {
+//        return new ApiResponse<>(
+//                HttpStatus.OK,
+//                HttpStatus.OK.value(),
+//                "Success",
+//                data);
+//    }
+
+    public static <T> ApiResponse<T> badRequest(Exception e, String msg) {
+        return new ApiResponse<>(
+                HttpStatus.BAD_REQUEST,
+                HttpStatus.BAD_REQUEST.value(),
+                msg,
+                null);
     }
 }

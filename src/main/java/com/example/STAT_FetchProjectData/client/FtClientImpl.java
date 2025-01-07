@@ -32,6 +32,7 @@ public class FtClientImpl implements FtClient{
         log.info("access_token = {}\n", oAuth2AccessToken);
         int page = 0;
         List<String> allProjects = new ArrayList<>();
+
         while (true) {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<ArrayList> response = restTemplate.exchange(
@@ -45,7 +46,14 @@ public class FtClientImpl implements FtClient{
 
             allProjects.add(body.toString());
             page++;
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                log.info("thread interrupted!!");
+            }
+
         }
         return allProjects;
     }
+
 }
