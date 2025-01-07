@@ -26,18 +26,17 @@ public class FtClientImpl implements FtClient{
     @Override
     public List<String> getProjects(String serverId) {
         int requestNum = 0;
-
         String oAuth2AccessToken = ftTokenRepository.getAccessToken();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + oAuth2AccessToken);
-        HttpEntity request = new HttpEntity(headers);
 
 
         int page = 0;
         List<String> allProjects = new ArrayList<>();
 
         while (true) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Authorization", "Bearer " + oAuth2AccessToken);
+            HttpEntity request = new HttpEntity(headers);
+
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<ArrayList> response = null;
             try {
@@ -50,6 +49,7 @@ public class FtClientImpl implements FtClient{
                 if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
                     ftTokenClient.refreshFtToken();
                     oAuth2AccessToken = ftTokenRepository.getAccessToken();
+                    continue ;
                 } else {
                     throw new HttpClientErrorException(e.getStatusCode(), e.getResponseBodyAsString());
                 }
