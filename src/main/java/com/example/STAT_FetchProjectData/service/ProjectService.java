@@ -1,22 +1,33 @@
 package com.example.STAT_FetchProjectData.service;
 
-import com.example.STAT_FetchProjectData.client.FtClientImpl;
+import com.example.STAT_FetchProjectData.api.controller.dto.UsersProjectsResponse;
+import com.example.STAT_FetchProjectData.client.FtClient;
+import com.example.STAT_FetchProjectData.repository.FtTokenRepository;
+import com.example.STAT_FetchProjectData.service.dto.Users;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
 
-    private final FtClientImpl ftClient;
+    private final FtClient ftClient;
 
-    public List<String> getProjects(String serverId, String oAuth2AccessToken) {
-        /*
-        todo
-        없는 유저 들어왔을 경우 처리
-         */
-        return ftClient.getProjects(serverId, oAuth2AccessToken);
+    public List<UsersProjectsResponse> getProjects(Users users) {
+        List<String> userIds = users.getUserIds();
+        List<UsersProjectsResponse> result = new ArrayList<>();
+
+        for (String serverId : userIds) {
+            UsersProjectsResponse response = new UsersProjectsResponse();
+            response.setServerId(serverId);
+            response.setAllProjectsResponse(ftClient.getProjects(serverId));
+            result.add(response);
+        }
+        return result;
     }
 }

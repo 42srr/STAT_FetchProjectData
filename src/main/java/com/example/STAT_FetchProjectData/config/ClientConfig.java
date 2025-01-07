@@ -14,10 +14,13 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class ClientConfig {
     private final TokenConfig tokenConfig;
+    private final FtTokenRepository ftTokenRepository;
+    private final FtTokenClient ftTokenClient;
+
 
     @Bean
-    public FtClient ftClient() { return new FtClientImpl(tokenConfig); }
+    public FtClient ftClient() { return new FtClientImpl(ftTokenRepository, ftTokenClient); }
 
     @Bean
-    public FtTokenClient ftTokenClient() { return new FtTokenClientImpl(tokenConfig); }
+    public FtTokenClient ftTokenClient() { return new FtTokenClientImpl(tokenConfig, ftTokenRepository); }
 }

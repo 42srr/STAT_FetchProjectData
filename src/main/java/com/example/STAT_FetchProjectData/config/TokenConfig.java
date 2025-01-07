@@ -19,4 +19,5 @@ public class TokenConfig {
 
     private String grantType = "authorization_code";
     private String tokenURI = "https://api.intra.42.fr/oauth/token";
+    private String refreshTokenURI = "";
 }

@@ -23,13 +23,15 @@ public class FtMemoryTokenRepository implements FtTokenRepository {
     }
 
     @Override
-    public void saveAccessToken(Oauth2TokenResponseDto token) {
-        dataBase.clear();
-        dataBase.add(token);
+    public String getRefreshToken() {
+        if(dataBase.peek() == null)
+            throw new TokenNotFoundException("Fail to load Refresh Token");
+        return dataBase.peek().getRefresh_token();
     }
 
     @Override
-    public void refreshAccessToken() {
-
+    public void saveAccessToken(Oauth2TokenResponseDto token) {
+        dataBase.clear();
+        dataBase.add(token);
     }
 }
