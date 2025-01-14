@@ -1,5 +1,6 @@
 package com.example.STAT_FetchProjectData.api.controller.dto;
 
+import com.example.STAT_FetchProjectData.client.dto.ParsingResponseDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,5 +10,5 @@ import java.util.List;
 @Getter
 public class UsersProjectsResponse {
     String serverId;
-    List<String> allProjectsResponse;
+    List<ParsingResponseDto> allProjectsResponse;
 }

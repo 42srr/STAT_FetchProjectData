@@ -1,7 +1,8 @@
 package com.example.STAT_FetchProjectData.client;
 
+import com.example.STAT_FetchProjectData.client.dto.ParsingResponseDto;
 import java.util.List;
 
 public interface FtClient {
-    List<String> getProjects(String serverId);
+    List<ParsingResponseDto> getProjects(String serverId);
 }

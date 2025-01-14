@@ -16,7 +16,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public ApiResponse<String> doLogin(
-            @RequestParam(required = true) String code ) {
+            @RequestParam("code") String code ) {
         log.info("=== code ===\n{}", code);
 
         return ApiResponse.ok(loginService.registerAccessToken(code));
