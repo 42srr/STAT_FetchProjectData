@@ -8,6 +8,6 @@ import java.util.List;
 @Setter
 @Getter
 public class UsersProjectsResponse {
-    String serverId;
+    String intraId;
     List<String> allProjectsResponse;
 }

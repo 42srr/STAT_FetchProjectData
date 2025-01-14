@@ -7,9 +7,9 @@ import java.util.List;
 
 @Getter
 public class UsersRequest {
-    private List<String> userIds;
+    private List<UserContent> userContents;
 
     public Users usersRequesttoUsers() {
-        return new Users(userIds);
+        return new Users(userContents);
     }
 }
