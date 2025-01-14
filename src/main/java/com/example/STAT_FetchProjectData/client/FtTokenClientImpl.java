@@ -8,7 +8,6 @@ import com.example.STAT_FetchProjectData.config.TokenConfig;
 import com.example.STAT_FetchProjectData.repository.FtTokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
