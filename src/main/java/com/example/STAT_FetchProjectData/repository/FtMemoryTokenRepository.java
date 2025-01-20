@@ -1,7 +1,6 @@
 package com.example.STAT_FetchProjectData.repository;
 
 import com.example.STAT_FetchProjectData.client.dto.Oauth2TokenResponseDto;
-import com.example.STAT_FetchProjectData.config.TokenConfig;
 import com.example.STAT_FetchProjectData.client.exception.TokenNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
