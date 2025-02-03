@@ -18,9 +18,14 @@ public class ProjectController {
     private final ProjectService projectService;
     private final FtMemoryTokenRepository ftClientToken;
 
-    @PostMapping("/project")
-    public ApiResponse<List<UsersProjectsResponse>> getAllProjects(@RequestBody UsersRequest usersRequest) {
+    @PostMapping("/user_projects")
+    public ApiResponse<List<UsersProjectsResponse>> getAllUsersProjects(@RequestBody UsersRequest usersRequest) {
         log.info("=== user ===\n{}", usersRequest.toString());
-        return ApiResponse.ok(projectService.getProjects(usersRequest.usersRequesttoUsers()));
+        return ApiResponse.ok(projectService.getUserProjects(usersRequest.usersRequestToUsers()));
+    }
+
+    @GetMapping("/projects")
+    public ApiResponse<List<String>> getAllProjects() {
+        return ApiResponse.ok(projectService.getProjects());
     }
 }

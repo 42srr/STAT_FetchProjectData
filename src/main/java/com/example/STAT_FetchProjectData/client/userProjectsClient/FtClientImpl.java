@@ -1,7 +1,8 @@
-package com.example.STAT_FetchProjectData.client;
+package com.example.STAT_FetchProjectData.client.userProjectsClient;
 
+import com.example.STAT_FetchProjectData.client.tokenClient.FtTokenClient;
 import com.example.STAT_FetchProjectData.client.dto.ParsingResponseDto;
-import com.example.STAT_FetchProjectData.client.dto.ProjectDto;
+import com.example.STAT_FetchProjectData.client.dto.UserProjectDto;
 import com.example.STAT_FetchProjectData.client.dto.TeamsDto;
 import com.example.STAT_FetchProjectData.repository.FtTokenRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +27,10 @@ public class FtClientImpl implements FtClient {
     private final String PROJECT_USER_URL_SUFFIX = "/projects_users?filter[cursus]=21&page=";
 
     @Override
-    public List<ParsingResponseDto> getProjects(String serverId) {
-        int requestNum = 0;
+    public List<ParsingResponseDto> getUserProjects(String serverId) {
         String oAuth2AccessToken = ftTokenRepository.getAccessToken();
 
-        int page = 0;
+        int page = 1;
         List<ParsingResponseDto> allProjects = new ArrayList<>();
 
         while (true) {
@@ -81,7 +81,7 @@ public class FtClientImpl implements FtClient {
         for (HashMap<String, Object> data : body) {
             ParsingResponseDto parsingResponseDto = new ParsingResponseDto();
 
-            ProjectDto projectName = extractProjectField(data);
+            UserProjectDto projectName = extractProjectField(data);
             parsingResponseDto.setProjectName(projectName.getProjectName());
 
             List<TeamsDto> teams = extractTeamsList(data);
@@ -96,9 +96,9 @@ public class FtClientImpl implements FtClient {
         return responseDtoList;
     }
 
-    public static ProjectDto extractProjectField(HashMap<String, Object> data) {
+    public static UserProjectDto extractProjectField(HashMap<String, Object> data) {
         HashMap<String, Object> project = (HashMap<String, Object>) data.get("project");
-        return new ProjectDto((String) project.get("name"));
+        return new UserProjectDto((String) project.get("name"));
     }
 
     public static TeamsDto extractTeamsField(HashMap<String, Object> team) {

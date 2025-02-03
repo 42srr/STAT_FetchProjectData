@@ -1,6 +1,6 @@
 package com.example.STAT_FetchProjectData.service;
 
-import com.example.STAT_FetchProjectData.client.FtTokenClient;
+import com.example.STAT_FetchProjectData.client.tokenClient.FtTokenClient;
 import com.example.STAT_FetchProjectData.repository.FtTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

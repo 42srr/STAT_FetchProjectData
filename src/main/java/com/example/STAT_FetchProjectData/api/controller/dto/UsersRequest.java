@@ -9,7 +9,7 @@ import java.util.List;
 public class UsersRequest {
     private List<UserContent> userContents;
 
-    public Users usersRequesttoUsers() {
+    public Users usersRequestToUsers() {
         return new Users(userContents);
     }
 }
