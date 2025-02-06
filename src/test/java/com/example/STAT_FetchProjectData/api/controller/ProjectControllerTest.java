@@ -1,12 +1,10 @@
 package com.example.STAT_FetchProjectData.api.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.STAT_FetchProjectData.repository.FtMemoryTokenRepository;
 import com.example.STAT_FetchProjectData.service.ProjectService;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -24,9 +22,6 @@ class ProjectControllerTest {
 
     @MockitoBean
     private ProjectService projectService;
-
-    @MockitoBean
-    private FtMemoryTokenRepository ftMemoryTokenRepository;
 
     @DisplayName("/projects를 했을 경우 정상 응답되는지 확인한다.")
     @Test

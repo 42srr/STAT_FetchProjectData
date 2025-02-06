@@ -3,7 +3,6 @@ package com.example.STAT_FetchProjectData.api.controller;
 import com.example.STAT_FetchProjectData.api.ApiResponse;
 import com.example.STAT_FetchProjectData.api.controller.dto.UsersProjectsResponse;
 import com.example.STAT_FetchProjectData.api.controller.dto.UsersRequest;
-import com.example.STAT_FetchProjectData.repository.FtMemoryTokenRepository;
 import com.example.STAT_FetchProjectData.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProjectController {
     private final ProjectService projectService;
-    private final FtMemoryTokenRepository ftClientToken;
 
     @PostMapping("/user_projects")
     public ApiResponse<List<UsersProjectsResponse>> getAllUsersProjects(@RequestBody UsersRequest usersRequest) {
