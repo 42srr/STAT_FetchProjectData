@@ -40,33 +40,18 @@ public class ProjectService {
 
     public List<String> getProjects() {
         Set<String> projectNames = new LinkedHashSet<>();
-        int page = 1;
+        List<ProjectDto> allProjectsInfo = projectsClient.fetchAllProjects();
 
-        while (true) {
-            List<ProjectDto> projectsInfo = projectsClient.fetchProjects(page);
-            if (projectsInfo.isEmpty()) {
-                break;
+        for (ProjectDto project : allProjectsInfo) {
+            if (hasGyeongsan(project)) {
+                projectNames.add(project.getName());
             }
-            List<String> projectsInGyeongsan = getProjectsInGyeongsan(projectsInfo);
-            projectNames.addAll(projectsInGyeongsan);
-            page++;
         }
         return new ArrayList<>(projectNames);
     }
 
-    private List<String> getProjectsInGyeongsan(List<ProjectDto> projectsInfo) {
-        Set<String> projectsInGyeongsan = new LinkedHashSet<>();
-
-        for (ProjectDto project : projectsInfo) {
-            if (hasGyeongsan(project)) {
-                projectsInGyeongsan.add(project.getName());
-            }
-        }
-        return new ArrayList<>(projectsInGyeongsan);
-    }
-
     private boolean hasGyeongsan(ProjectDto project) {
-        if(project.getCampus() == null) {
+        if (project.getCampus() == null) {
             return false;
         }
 

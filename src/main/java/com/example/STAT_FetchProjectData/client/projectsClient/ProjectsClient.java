@@ -3,6 +3,7 @@ package com.example.STAT_FetchProjectData.client.projectsClient;
 import com.example.STAT_FetchProjectData.client.tokenClient.FtTokenClient;
 import com.example.STAT_FetchProjectData.repository.FtMemoryTokenRepository;
 import com.example.STAT_FetchProjectData.service.dto.ProjectDto;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +23,26 @@ import org.springframework.web.client.RestTemplate;
 public class ProjectsClient {
     private final FtTokenClient ftTokenClient;
     private final FtMemoryTokenRepository ftTokenRepository;
-    private final String PROJECTS_URL= "https://api.intra.42.fr/v2/cursus/21/projects?page=";
+    private final String PROJECTS_URL = "https://api.intra.42.fr/v2/cursus/21/projects?page=";
 
-    public List<ProjectDto> fetchProjects(int page) {
+
+    public List<ProjectDto> fetchAllProjects() {
+        List<ProjectDto> allProjectsInfo = new ArrayList<>();
+
+        int page = 1;
+        while (true) {
+            List<ProjectDto> projects = fetchProjects(page);
+            if (projects.isEmpty()) {
+                break;
+            }
+            allProjectsInfo.addAll(projects);
+            page++;
+        }
+
+        return allProjectsInfo;
+    }
+
+    private List<ProjectDto> fetchProjects(int page) {
         String oAuth2AccessToken = ftTokenRepository.getAccessToken();
         HttpHeaders headers = getHttpHeaders(oAuth2AccessToken);
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -36,16 +54,13 @@ public class ProjectsClient {
                     url,
                     HttpMethod.GET,
                     entity,
-                    new ParameterizedTypeReference<List<ProjectDto>>() {}
+                    new ParameterizedTypeReference<List<ProjectDto>>() {
+                    }
             );
-            Thread.sleep(500);
-
+            delayRequest();
             return response.getBody();
         } catch (HttpClientErrorException e) {
             return handleHTTPError(page, e);
-        } catch (InterruptedException e) {
-            log.info("thread interrupted!!");
-            throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 
@@ -55,12 +70,22 @@ public class ProjectsClient {
         return headers;
     }
 
+    private void delayRequest() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            log.warn("thread interrupted!!");
+        }
+    }
+
     private List<ProjectDto> handleHTTPError(int page, HttpClientErrorException e) {
         if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
             ftTokenClient.refreshFtToken();
             return fetchProjects(page);
+        } else if (e.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS) {
+            throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS, e.getMessage());
         } else {
-            throw new HttpClientErrorException(e.getStatusCode(), e.getResponseBodyAsString());
+            throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 }

@@ -27,18 +27,13 @@ class ProjectServiceTest {
     @Test
     void getProjectInGyeongsanWithCorrectList() {
         // Given
-        List<ProjectDto> page1 = List.of(
+        List<ProjectDto> allProjects = List.of(
                 new ProjectDto("project1", List.of(new CampusDto("Gyeongsan"))),
-                new ProjectDto("project2", List.of(new CampusDto("Seoul")))
-        );
-        List<ProjectDto> page2 = List.of(
+                new ProjectDto("project2", List.of(new CampusDto("Seoul"))),
                 new ProjectDto("project3", List.of(new CampusDto("Gyeongsan")))
         );
 
-        List<ProjectDto> page3 = List.of();
-        when(projectsClient.fetchProjects(1)).thenReturn(page1);
-        when(projectsClient.fetchProjects(2)).thenReturn(page2);
-        when(projectsClient.fetchProjects(3)).thenReturn(page3);
+        when(projectsClient.fetchAllProjects()).thenReturn(allProjects);
         // When
         List<String> tempResult = projectService.getProjects();
         // Then
@@ -52,17 +47,12 @@ class ProjectServiceTest {
     @Test
     void getEmptyListWithoutGyeongsan() {
         // Given
-        List<ProjectDto> page1 = List.of(
-                new ProjectDto("project1", List.of(new CampusDto("Seoul")))
-        );
-        List<ProjectDto> page2 = List.of(
+        List<ProjectDto> allProjects = List.of(
+                new ProjectDto("project1", List.of(new CampusDto("Seoul"))),
                 new ProjectDto("project2", List.of(new CampusDto("Seoul")))
         );
-        List<ProjectDto> page3 = List.of();
 
-        when(projectsClient.fetchProjects(1)).thenReturn(page1);
-        when(projectsClient.fetchProjects(2)).thenReturn(page2);
-        when(projectsClient.fetchProjects(3)).thenReturn(page3);
+        when(projectsClient.fetchAllProjects()).thenReturn(List.of());
         // When
         List<String> tempResult = projectService.getProjects();
         // Then
@@ -75,7 +65,7 @@ class ProjectServiceTest {
         // Given
         List<ProjectDto> page1 = List.of();
 
-        when(projectsClient.fetchProjects(1)).thenReturn(page1);
+        when(projectsClient.fetchAllProjects()).thenReturn(page1);
         // When
         List<String> tempResult = projectService.getProjects();
         // Then
