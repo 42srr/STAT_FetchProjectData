@@ -1,4 +1,4 @@
-package com.example.STAT_FetchProjectData.client;
+package com.example.STAT_FetchProjectData.client.tokenClient;
 
 import com.example.STAT_FetchProjectData.client.dto.Oauth2TokenResponseDto;
 

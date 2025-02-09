@@ -2,8 +2,9 @@ package com.example.STAT_FetchProjectData.client;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.example.STAT_FetchProjectData.client.dto.ProjectDto;
+import com.example.STAT_FetchProjectData.client.dto.UserProjectDto;
 import com.example.STAT_FetchProjectData.client.dto.TeamsDto;
+import com.example.STAT_FetchProjectData.client.userProjectsClient.FtClientImpl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,7 @@ class FtClientImplTest {
         data.put("project", project);
 
         // When
-        ProjectDto projectDto = FtClientImpl.extractProjectField(data);
+        UserProjectDto projectDto = FtClientImpl.extractProjectField(data);
 
         // Then
         assertNotNull(projectDto);

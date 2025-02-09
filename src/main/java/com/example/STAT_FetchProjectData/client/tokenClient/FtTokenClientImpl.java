@@ -1,4 +1,4 @@
-package com.example.STAT_FetchProjectData.client;
+package com.example.STAT_FetchProjectData.client.tokenClient;
 
 import com.example.STAT_FetchProjectData.client.dto.Oauth2RefreshTokenRequest;
 import com.example.STAT_FetchProjectData.client.dto.Oauth2TokenRequestDto;
@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
 
 @Slf4j
 @Component
@@ -42,7 +43,7 @@ public class FtTokenClientImpl implements FtTokenClient {
         } catch (HttpClientErrorException e) {
             throw new TokenRequestFailedException("Fail to get Access Token");
         }
-        log.info("=== token ==={}\n", responseDto.toString());
+        log.info("=== token ==={}\n", responseDto);
         return responseDto;
     }
 
@@ -64,6 +65,6 @@ public class FtTokenClientImpl implements FtTokenClient {
             throw new TokenRequestFailedException("Fail to refresh Access Token");
         }
         ftTokenRepository.saveAccessToken(responseDto);
-        log.info("=== refreshed new token! ===[]\n", responseDto.getAccess_token());
+        log.info("=== refreshed new token! ==={}\n", responseDto.getAccess_token());
     }
 }
